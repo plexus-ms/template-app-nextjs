@@ -29,6 +29,11 @@ services:
       - "127.0.0.1:${PLEXUS_LOOPBACK_PORT}:3000"
     labels:
       plexus.tenant: {{ _copier_answers.tenant }}
+    # The deploy verb waits for this check to report healthy and rolls back
+    # when it does not (§ 5 PLX-App). During start_period it runs every
+    # start_interval, so a fresh container is seen healthy within a second of
+    # being able to serve; start_period spans the deploy's wait.
+    # start_interval needs Docker Engine 25.0 and Compose 2.20.2 or later.
     healthcheck:
       test:
         - CMD
@@ -38,4 +43,5 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 60s
+      start_interval: 1s

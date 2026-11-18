@@ -18,8 +18,10 @@ services:
     environment: *ci-env
     restart: "no"
 {%- if profile == "stateful-app" %}
-  # A stateful app adds its services here: the migrate service with the same
-  # environment, the database published on 127.0.0.1 for the specs and kept in
-  # RAM (`volumes: !override []`, a tmpfs for its data dir), and the database
-  # URL in x-plexus-ci.env above.
+  # plx-ci test runs migrate once before `up`.
+  migrate:
+    environment: *ci-env
+  # A stateful app adds its data services here: the database published on
+  # 127.0.0.1 for the specs and kept in RAM (`volumes: !override []`, a tmpfs
+  # for its data dir), and the database URL in x-plexus-ci.env above.
 {%- endif %}

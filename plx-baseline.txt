@@ -2,4 +2,3 @@
 # One per line, as often as each occurs; `plx requirements --write-baseline` rewrites the file.
 template-header template/docker/Dockerfile: 17 header comment lines
 template-header template/docker/compose.ci.yaml.jinja: 9 header comment lines
-template-header template/docker/compose.yaml.jinja: 6 header comment lines

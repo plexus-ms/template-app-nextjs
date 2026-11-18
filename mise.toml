@@ -24,11 +24,12 @@ usage = '''
 flag "--write" help="Fix the files in place"
 arg "<paths>" var=#true default="." help="Files or directories to lint (defaults to the whole repo)"
 '''
-# hk's own fixers, so that lint needs no tool beyond the pinned ones. Biome
-# formats what the template renders, in the newborn, which check runs.
+# hk's own fixers, so that lint needs no tool beyond the pinned ones. A
+# .jinja file is linted as it renders, and biome formats what the template
+# renders, in the newborn, which check runs.
 run = '''
 eval "set -- $usage_paths"
-files=$(git ls-files --cached --others --exclude-standard -- "$@" | grep -v '^LICENSE$' || true)
+files=$(git ls-files --cached --others --exclude-standard -- "$@" | grep -v -e '^LICENSE$' -e '\.jinja$' || true)
 [ -n "$files" ] || exit 0
 status=0
 for fixer in trailing-whitespace end-of-file-fixer mixed-line-ending; do

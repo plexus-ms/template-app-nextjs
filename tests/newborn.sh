@@ -2,10 +2,10 @@
 # A newborn app passes its repo's own check: the Turborepo template is rendered as copier would
 # render it for a new app repo, birth tasks included, this template is rendered into it as
 # apps/<name>, once per profile, and the generated repo's own `mise run check` is run there
-# (lint, then each project's check script). The app template renders no source, so what is
-# checked is its config: package.json, tsconfig.json, next.config.ts and the rest as biome, next
-# typegen and tsc read them. This template's working tree is what is rendered, uncommitted
-# changes included.
+# (lint, then each project's check script). The app template renders the smallest app Next
+# accepts, a layout, a page and the /healthz route, so what is checked is mostly its config:
+# package.json, tsconfig.json, next.config.ts and the rest as biome, next typegen and tsc read
+# them. This template's working tree is what is rendered, uncommitted changes included.
 #
 # The Turborepo template is the one that ships with this one at the same Plexus version: every
 # versioned repo is tagged at once when a version is cut, so during development that is the

@@ -1,5 +1,18 @@
 _subdirectory: template
 
+# The app's source is rendered at birth only: the author rewrites it at once,
+# and an update that rendered it again would fight the author's app, or add a
+# root layout or page to an app whose route groups hold their own. An update
+# leaves these paths out entirely, and a recopy keeps those that exist.
+_exclude:
+  - "{% if _copier_operation == 'update' %}src/app/layout.tsx{% endif %}"
+  - "{% if _copier_operation == 'update' %}src/app/page.tsx{% endif %}"
+  - "{% if _copier_operation == 'update' %}src/app/healthz/route.ts{% endif %}"
+_skip_if_exists:
+  - src/app/layout.tsx
+  - src/app/page.tsx
+  - src/app/healthz/route.ts
+
 tenant:
   type: str
   help: "Tenant slug (URL-friendly)"

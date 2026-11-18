@@ -33,7 +33,7 @@ else
   turbo=gh:plexus-ms/template-repo-turbo
   ref=${TURBO_REF:-main}
 fi
-tmp=$(mktemp -d)
+tmp=$(mktemp -d "${TMPDIR:-/tmp}/newborn.XXXXXX")
 repo=$tmp/acme
 if [ -n "${KEEP:-}" ]; then trap 'echo "kept: $repo"' EXIT; else trap 'rm -rf "$tmp"' EXIT; fi
 

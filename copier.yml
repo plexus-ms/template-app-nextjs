@@ -10,7 +10,7 @@ name:
   placeholder: "@acme-corp/foo"
 profile:
   type: str
-  help: "App contract profile (§ 5.2 PLX): the module the app declares, PLX-AppStateless or PLX-AppStateful"
+  help: "The app's profile (§§ 8 and 9 PLX-App), which its marker states: stateless-app, an app holding no state of its own; stateful-app, an app with data services of its own, which gets a migrate service in its compose file and migrate and seed scripts to write"
   choices:
     - stateless-app
     - stateful-app

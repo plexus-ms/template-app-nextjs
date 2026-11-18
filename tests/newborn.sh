@@ -46,6 +46,11 @@ for profile in stateless-app stateful-app; do
     -d tenant=acme -d name="@acme/$profile" -d profile="$profile" "$here" "$repo/apps/$profile"
 done
 
+# The lockfile was written at the repo's birth, before the apps existed. An author who adds an app
+# installs, which updates it; under CI=true the check's install is frozen and refuses a stale one.
+echo "→ repo: lockfile"
+(cd "$repo" && pnpm install --lockfile-only)
+
 echo "→ repo: check"
 (cd "$repo" && mise run check)
 

@@ -1,11 +1,7 @@
 _subdirectory: template
 
-# The app's source is rendered at birth only: the author rewrites it at once,
-# and an update that rendered it again would fight the author's app, or add a
-# root layout or page to an app whose route groups hold their own. The marker
-# likewise: its body is the app's own prose (§ 1.4 PLX), and a change to its
-# frontmatter is made by hand with the version that brings it. An update
-# leaves these paths out entirely, and a recopy keeps those that exist.
+# The app's source and its marker are rendered at birth only: an update would fight what the author wrote,
+# or add a root layout to an app whose route groups hold their own.
 _exclude:
   - "{% if _copier_operation == 'update' %}src/app/layout.tsx{% endif %}"
   - "{% if _copier_operation == 'update' %}src/app/page.tsx{% endif %}"

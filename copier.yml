@@ -2,16 +2,20 @@ _subdirectory: template
 
 # The app's source is rendered at birth only: the author rewrites it at once,
 # and an update that rendered it again would fight the author's app, or add a
-# root layout or page to an app whose route groups hold their own. An update
+# root layout or page to an app whose route groups hold their own. The marker
+# likewise: its body is the app's own prose (§ 1.4 PLX), and a change to its
+# frontmatter is made by hand with the version that brings it. An update
 # leaves these paths out entirely, and a recopy keeps those that exist.
 _exclude:
   - "{% if _copier_operation == 'update' %}src/app/layout.tsx{% endif %}"
   - "{% if _copier_operation == 'update' %}src/app/page.tsx{% endif %}"
   - "{% if _copier_operation == 'update' %}src/app/healthz/route.ts{% endif %}"
+  - "{% if _copier_operation == 'update' %}PLEXUS.md{% endif %}"
 _skip_if_exists:
   - src/app/layout.tsx
   - src/app/page.tsx
   - src/app/healthz/route.ts
+  - PLEXUS.md
 
 tenant:
   type: str

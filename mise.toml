@@ -1,3 +1,8 @@
+monorepo_root = true
+
+[monorepo]
+config_roots = ["."]
+
 [tools]
 hk = "latest"
 # mise's Python keeps the uv tools' environments inside the cached data directory; it must satisfy

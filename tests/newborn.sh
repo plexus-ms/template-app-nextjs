@@ -1,6 +1,7 @@
 #!/bin/sh
 # A newborn app passes its repo's own check: this working tree, uncommitted changes included, is
-# rendered once per profile into a newborn of the Turborepo template, whose `mise run check` runs.
+# rendered once per profile into a newborn of the Turborepo template, taking the tenant from the repo's
+# answers, and the repo's `mise run check` runs.
 # That template is the forge's main, which ships with this one, or TURBO_TEMPLATE as it stands.
 #
 #   tests/newborn.sh                                         # the forge's main around this tree
@@ -32,7 +33,7 @@ copier copy --quiet --defaults --trust --vcs-ref "$ref" -d tenant=acme "$turbo" 
 for profile in stateless-app stateful-app; do
   echo "→ apps/$profile: render"
   copier copy --quiet --defaults --trust --vcs-ref HEAD \
-    -d tenant=acme -d name="@acme/$profile" -d profile="$profile" "$here" "$repo/apps/$profile"
+    -d name="@acme/$profile" -d profile="$profile" "$here" "$repo/apps/$profile"
 done
 
 # The lockfile predates the apps, and under CI=true the check's frozen install refuses it.

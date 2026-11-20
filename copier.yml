@@ -13,10 +13,16 @@ _skip_if_exists:
   - src/app/healthz/route.ts
   - PLEXUS.md
 
+# The enclosing repo's answers file, two directories up from apps/<name>, by an absolute path: at birth the
+# app's own directory does not exist yet to be walked through.
+_external_data:
+  repo: "{{ _copier_conf.dst_path | realpath | dirname | dirname }}/.copier-answers.yml"
+
 tenant:
   type: str
-  help: "Tenant slug (URL-friendly)"
-  placeholder: "acme-corp"
+  help: "Tenant slug, the enclosing repo's answer"
+  default: "{{ _external_data.repo.tenant }}"
+  ask: false
 name:
   type: str
   help: "App name (for package.json)"

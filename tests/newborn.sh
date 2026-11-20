@@ -1,7 +1,7 @@
 #!/bin/sh
 # A newborn app passes its repo's own check: this working tree, uncommitted changes included, is
 # rendered once per profile into a newborn of the Turborepo template, taking the tenant from the repo's
-# answers, and the repo's `mise run check` runs.
+# answers, and the repo's `mise run check` runs. An app rendered where no repo's answers give a tenant is refused.
 # That template is the forge's main, which ships with this one, or TURBO_TEMPLATE as it stands.
 #
 #   tests/newborn.sh                                         # the forge's main around this tree
@@ -35,6 +35,16 @@ for profile in stateless-app stateful-app; do
   copier copy --quiet --defaults --trust --vcs-ref HEAD \
     -d name="@acme/$profile" -d profile="$profile" "$here" "$repo/apps/$profile"
 done
+
+echo "→ apps/orphan: render with no repo around it"
+if out=$(copier copy --quiet --defaults --trust --vcs-ref HEAD -d name=@acme/orphan "$here" "$tmp/orphan/apps/orphan" 2>&1); then
+  echo "✗ apps/orphan: rendered without a tenant" >&2
+  exit 1
+fi
+case $out in
+  *"no tenant in "*"/orphan/.copier-answers.yml"*) ;;
+  *) printf '%s\n✗ apps/orphan: refused without naming the answers file\n' "$out" >&2; exit 1 ;;
+esac
 
 # The lockfile predates the apps, and under CI=true the check's frozen install refuses it.
 echo "→ repo: lockfile"

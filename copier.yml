@@ -18,10 +18,14 @@ _skip_if_exists:
 _external_data:
   repo: "{{ _copier_conf.dst_path | realpath | dirname | dirname }}/.copier-answers.yml"
 
+# A tenant that resolves empty fails the copy, naming the answers file it looked for.
 tenant:
   type: str
   help: "Tenant slug, the enclosing repo's answer"
-  default: "{{ _external_data.repo.tenant }}"
+  default: >-
+    {{ _external_data.repo.tenant or (repo_tenant | mandatory("no tenant in "
+    ~ (_copier_conf.dst_path | realpath | dirname | dirname) ~ "/.copier-answers.yml,
+    the answers file of the repo two directories up")) }}
   ask: false
 name:
   type: str

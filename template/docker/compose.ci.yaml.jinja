@@ -7,7 +7,7 @@ x-plexus-ci:
 
 # Stands in for .env and .env.secret, with throwaway values.
 x-ci-env: &ci-env
-  PUBLIC_URL: http://127.0.0.1:${PLEXUS_LOOPBACK_PORT}
+  PUBLIC_URL: http://127.0.0.1:${PLEXUS_LOOPBACK_PORT:?set by plx-ci test}
 
 services:
   web:

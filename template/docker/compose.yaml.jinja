@@ -14,7 +14,7 @@ services:
       - path: .env.secret
         required: false
     ports:
-      - "127.0.0.1:${PLEXUS_LOOPBACK_PORT}:3000"
+      - "127.0.0.1:${PLEXUS_LOOPBACK_PORT:?set by the platform playbook}:3000"
     labels:
       plexus.tenant: {{ _copier_answers.tenant }}
     healthcheck:
